@@ -1,0 +1,21 @@
+server:
+  port: 8010
+
+# 添加eureka的配置,
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password123@localhost:8761/eureka/
+    healthcheck:
+      enabled: true     # 启动eureka健康检查 需要使用SpringCloud1.1之后
+  instance:
+    prefer-ip-address: true   # 配置eureka的status显示默认值默认为(主机名.服务名.主机id.服务端口)myhost:myappname:8080
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}   #自定义配置
+
+
+spring:
+  application:
+    name: microservice-consumer-movie
+logging:
+  level:
+    com.emotte.config.FeignConfiguration: debug   # fegin的日志级别

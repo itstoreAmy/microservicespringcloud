@@ -1,0 +1,49 @@
+# 端口号
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@microservice-discovery-eureka:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+# spring 相关
+spring:
+  application:
+    name: microservice-hystrix-dashboard
+    index: ${random.long}
+  cloud:
+    # config 配置 http://10.10.5.135:8888/master/microservice-provider-user-dev.yml
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: microservice-config-server
+      fail-fast: true # 链接不上configserver直接报错
+    bus:
+      trace:
+        enabled: true # 配置追踪 http://localhost:8080/trace
+
+
+turbine:
+  aggregator:
+    clusterConfig: default
+  appConfig: microservice-consumer-movie,microservice-provider-user
+  clusterNameExpression: "'default'"
+
+
+
+
+
+
+
+
+
+
+
+
+
+

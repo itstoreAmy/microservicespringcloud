@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: microservice-gateway-zuul
+server:
+  port: 8040
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password123@microservice-discovery-eureka:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+# hystrix超时时间 (访问zuul后端的服务连接时间)
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+  eureka:
+    enabled: false
+
+
+# zuul 配置
+zuul:
+  routes:
+    microservice-provider-user:
+      path: /user-url/**
+      service-id: microservice-provider-user
+    microservice-consumer-movie:
+      path: /movie-url/**
+      service-id: microservice-consumer-movie
+  # prefix: /gjb  # 全局前缀
+  # ignored-patterns: /**/admin/** #忽略某些路径
+
+# zuul 用ribbon做负载均衡
+microservice-provider-user:     # 这边是ribbon要请求的微服务的serviceId
+  ribbon:
+    listOfServers: http://localhost:7900,http://localhost:7901
+
+logging:
+  level:
+    com.netflix: debug
+
+
+# 忽略安全,正式上 最好别配置
+# http://10.10.7.121:8040/routes
+management:
+  security:
+    enabled: false

@@ -1,0 +1,89 @@
+profile: 121
+# 端口号
+server:
+  port: 7900
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+# spring 相关
+spring:
+  application:
+    name: microservice-provider-user
+    index: ${random.long}
+  cloud:
+    # config 配置 http://10.10.5.135:8888/master/microservice-provider-user-dev.yml
+#    http://127.0.0.1:8888/microservice-provider-user/dev/master
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: microservice-config-server
+      fail-fast: true # 链接不上configserver直接报错
+    bus:
+      trace:
+        enabled: true # 配置追踪 http://localhost:8080/trace
+    stream:
+      default-binder: rabbit
+    inetutils:
+      ignoredInterfaces:
+      - docker0
+      - veth.*
+      - VM.*
+  # 设置日志请求跟踪信息百分比,默认百分之十
+  sleuth:
+    sampler:
+      percentage: 1
+  # 链接zipkin客户端 和rabbitmq整合就不用此链接了
+  # zipkin:
+    # base-url: http://localhost:9411
+  aop:
+    auto: true
+    proxy-target-class: true
+
+  zipkin:
+    locator:
+      discovery:
+        enabled: true
+
+  redis:
+    # 链接工厂使用的数据库索引
+    database: 0
+    clusterNodes: 192.168.10.230:21234,192.168.10.231:31234,192.168.10.232:41234
+    masterName: mymaster
+    password: 8IP#EFcLHKu4=
+    ssl: false
+    sentinel:
+      master: mymaster
+      nodes: 192.168.10.230:21234,192.168.10.231:31234,192.168.10.232:41234
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+    timeout: 0
+
+management:
+  security:
+    enabled: false    #刷新时关闭安全认证
+
+
+
+
+
+
+
+
+
+
+
+
+
+

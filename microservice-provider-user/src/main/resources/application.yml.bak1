@@ -1,0 +1,21 @@
+#eureka 相关
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+# 数据库连接
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.10.242:1521:orcl
+    username: emerp
+    password: e97896
+
+#日志
+logging:
+  level:
+    root: debug
+  com.emotte: debug

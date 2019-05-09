@@ -1,0 +1,48 @@
+# 端口号
+server:
+  port: 8011
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true   # 配置eureka的status显示默认值默认为(主机名.服务名.主机id.服务端口)myhost:myappname:8080
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}   #自定义配置
+
+# spring 相关
+spring:
+  application:
+    name: microservice-consumer-movie
+    index: ${random.long}
+  cloud:
+    # config 配置
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: microservice-config-server
+      fail-fast: true
+    stream:
+      default-binder: rabbit
+#    inetutils:
+#      ignoredInterfaces:
+#      - docker0
+#      - veth.*
+#      - VM.*
+
+
+  # 设置日志请求跟踪信息百分比,默认百分之十
+  sleuth:
+    sampler:
+      percentage: 1
+  # 链接zipkin客户端
+  # zipkin:
+    # base-url: http://localhost:9411
+
+
+
+
+
+

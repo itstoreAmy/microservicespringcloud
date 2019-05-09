@@ -1,0 +1,41 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://10.10.53.206/xiaoqiang/config.git # 一个项目下对应多有的配置
+#          uri: http://10.10.7.206/config/{application}  # 一个项目一个配置文件的项目
+          force-pull: true
+          username: xiaoqiang
+          password: asdfghjkl
+          default-label: master
+          search-paths: dev*
+  application:
+    name: microservice-config-server
+    index: ${random.long}
+
+  # 链接rabbitmq
+  rabbitmq:
+    # host: 192.168.10.191
+    host: 192.168.10.180
+    port: 5672
+    username: gjb
+    password: gjb123
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+
+
+logging:
+  level:
+    # org.springframework.web: trace
+    # org.apache: trace
+    # root: warn

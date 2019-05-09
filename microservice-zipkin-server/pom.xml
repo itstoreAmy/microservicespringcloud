@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>microservice-spring-cloud</artifactId>
+        <groupId>com.emotte.cloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>microservice-zipkin-server</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <name>microservice-zipkin-server</name>
+    <packaging>jar</packaging>
+    <description>zipkin</description>
+
+    <dependencies>
+        <!--eureka客户端-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--健康检查-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+        <!-- log-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+        </dependency>
+        <!-- 整合rabbitmq-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-storage-elasticsearch-http</artifactId>
+            <version>1.16.2</version>
+        </dependency>
+
+
+
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.13</version>
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<id>build-image</id>-->
+                <!--<phase>package</phase>-->
+                <!--<goals>-->
+                <!--<goal>build</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <configuration>
+                    <!--${docker.image.prefix}/${project.artifactId}-->
+                    <imageName>${project.artifactId}:${project.version}</imageName>
+                    <forceTags>true</forceTags>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+
+                    <!-- 用于指定基础镜像,类似于Dockerfile中的FROM命令-->
+                    <baseImage>java</baseImage>
+                    <!-- 类似于Dockerfile的ENTRYPOINT命令-->
+                    <entryPoint>["java","-jar", "${project.build.finalName}.jar}"]</entryPoint>
+                    <!--<dockerDirectory>src/main/docker</dockerDirectory>-->
+                    <!-- 解决Connect to localhost:2375的问题的其中一种方式，注意要跟docker 环境信息相一致 -->
+                    <!--<dockerHost>https://192.168.99.100:2376</dockerHost>-->
+                    <!--<dockerCertPath>C:\Users\Administrator\.docker\machine\machines\default</dockerCertPath>-->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <!-- 用于指定需要复制的根目录 project.build.directory 标识target目录-->
+                            <directory>${project.build.directory}</directory>
+                            <!-- 用于指定需要复制的文件${project.build.finalName}.jar指的是打包后的jar文件-->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
