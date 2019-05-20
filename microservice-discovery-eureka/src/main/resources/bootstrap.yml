@@ -36,3 +36,16 @@ security:
   user:
     name: user
     password: password123
+
+logging:
+  level:
+    root: info
+    java.sql: debug
+    com.apache.ibatis: debug
+    com.emotte.cloud.**.mapper: debug
+    com.emotte.cloud.mapper: debug
+    com.emotte.cloud.feign.*: debug
+    org.springframework.cloud.sleuth: DEBUG
+    # org.springframework.web: debug
+    org.springframework.web.servlet.DispatcherServlet: debug
+    com.netflix: debug

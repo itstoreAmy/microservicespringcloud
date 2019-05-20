@@ -1,7 +1,7 @@
-profile: 121
+#profile: 121
 # 端口号
 server:
-  port: 7900
+  port: 7901
 
 eureka:
   client:
@@ -53,26 +53,10 @@ spring:
       discovery:
         enabled: true
 
-  redis:
-    # 链接工厂使用的数据库索引
-    database: 0
-    clusterNodes: 192.168.10.230:21234,192.168.10.231:31234,192.168.10.232:41234
-    masterName: mymaster
-    password: 8IP#EFcLHKu4=
-    ssl: false
-    sentinel:
-      master: mymaster
-      nodes: 192.168.10.230:21234,192.168.10.231:31234,192.168.10.232:41234
-    pool:
-      max-active: 8
-      max-idle: 8
-      max-wait: -1
-      min-idle: 0
-    timeout: 0
 
-management:
-  security:
-    enabled: false    #刷新时关闭安全认证
+
+
+
 
 
 

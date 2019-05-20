@@ -1,9 +1,7 @@
 package com.emotte.cloud.user;
 
 import com.emotte.cloud.MicroserviceProviderUserApplication;
-import com.emotte.cloud.controller.ConfigController;
 import com.emotte.cloud.controller.UserController;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,14 +13,14 @@ public class UserTest {
 
     @Autowired
     private UserController userController;
-
-    @Autowired
-    private ConfigController configClientController;
-
-    @Test
-    public void testProfile(){
-        String profile = configClientController.getProfile();
-        System.err.println("profile的值为:-----"+profile);
-    }
+//
+//    @Autowired
+//    private ConfigController configClientController;
+//
+//    @Test
+//    public void testProfile(){
+//        String profile = configClientController.getProfile();
+//        System.err.println("profile的值为:-----"+profile);
+//    }
 
 }
